@@ -1,0 +1,6 @@
+# editors
+.vscode/
+.helix/
+
+# output and artifacts
+out/
