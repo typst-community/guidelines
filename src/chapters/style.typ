@@ -1,6 +1,3 @@
-#import "/src/util.typ": *
-#import mantys: *
-
 #set heading(offset: 2)
 #include "style/naming.typ"
 #include "style/indentation.typ"
