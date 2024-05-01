@@ -13,10 +13,16 @@
   math: raw(lang: "typst", "$math-mode$"),
 )
 
-#let typst(path, ..body) = text(eastern, link(
+#let _link = link
+#let link(..args) = text(eastern, _link(..args))
+
+#let discord(..args) = link("https://discord.gg/2uDybryKPe", ..args)
+
+#let typst(path, ..body) = link(
   "https://typst.app/" + path.trim("/", at: start),
   body.pos().at(0, default: path),
-))
+)
+
 #let docs(path, ..rest) = typst("docs/" + path.trim("/", at: start), ..rest)
 #let reference(path, ..rest) = docs("reference/" + path.trim("/", at: start), ..rest)
 
