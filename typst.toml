@@ -1,0 +1,10 @@
+# this is not a package, but we reuse the schema for simplicity
+[package]
+name = "api-style-guidelines"
+version = "0.1.0"
+license = "MIT"
+authors = [
+  "tinger <me@tinger.dev>",
+]
+description = ""
+repository = "https://github.com/typst-community/guidelines"
