@@ -4,108 +4,60 @@
 = Flexibility <sec:api:flex>
 Good APIs must be flexible enough to allow users to use them in situations a developer might not have anticipated directly.
 
-== maybe locate
+== requiring or providing `context`
 
-#wbox[This Section is outdated and may be removed in favour of a context section.]
-
-There are several Typst functions that give you access to certain properties of your document via callbacks, among those are #reference("introspection/locate")[`locate`], #reference("foundations/style")[`style`], #reference("layout/layout")[`layout`].
-An example of using such a function could look like this:
+Starting with Typst 0.11, the #link("https://typst.app/docs/reference/context/")[context] feature allows certain functions to access information about the current location inside the document. The documentation gives the following example:
 
 #example(
   ```typ
-  #let body = [Hello]
-  #style(styles => [
-    #let width = measure(body, styles).width
-    The width of "#body" is #width.
-    Twice the width would be #(width * 2).
-  ])
+  #let value = context text.lang
+  #value
+  --
+  #set text(lang: "de"); #value
+  --
+  #set text(lang: "fr"); #value
   ```
 )
 
-These functions have in common that they return a `content` value, i.e. the properties (such as measured dimensions) can't escape the callback.
-That means that these functions ordinarily don't compose very well.
-In particular, the following code that tries to separate calculation and presentation doesn't work as intended:
+The same `value` is rendered three times, but with different results. This is of course a powerful tool for library authors! However, there is an important restriction that `context` needs to impose to be able to do that: `context` values are opaque content; the above does not result in a string such as `"en"`, it just renders that way:
 
 #example(
   ```typ
-  #let get-width(body) = style(styles => {
-    measure(body, styles).width
-  })
+  #let value = context text.lang
+  Rendered: #value
 
-  #let body = [Hello]
-  #let width = get-width(body)
-  The width of "#body" is #width.
-  Twice the width would be #(width * 2) -- oops!
-
-  A length has type #type(0pt),
-  but we got a #type(width)!
+  Type/representation: #type(value)/#raw(repr(value))
   ```
 )
 
-Especially in a library's public API, that can reduce a function's usefulness.
+This means that returning a context expression limits what can be done with a function's result. As a rule of thumb, if it's useful for a user to do more with your function than just render its result, you likely want to require the user of your function to use context instead of providing it yourself:
 
-The "maybe locate" idiom works around that by giving you two options in calling a function:
-- either with a callback, just like the "bare" `locate`/`style`/`layout` function, returning `content`; or
-- with their respective callback _arguments_, i.e. a `location`, `styles`, or dimension value, returning the actual value.
-The name comes from it initially being discussed in relation to the `locate` function, which is common when using the `query` function, but it applies equally to all of these.
-Here is its implementation for styles...
+#do-dont[
+  ```typst
+  /// Returns the current language. This function requires context.
+  ///
+  /// -> string
+  #let fancy-get-language() = { text.lang }
 
-```typ
-#let maybe-style(func-or-styles, inner) = {
-  if type(func-or-styles) == function {
-    // a callback was given. Call `style` here and give the result of our `inner`
-    // function to the callback. The callback's result will be converted to
-    // `content`, if it isn't already one.
-    let func = func-or-styles
-    style(styles => func(inner(styles)))
-  } else {
-    // the given value is (hopefully) a `styles` value; use it to call the inner
-    // function. No conversion to `content` is necessary.
-    let styles = func-or-styles
-    inner(styles)
-  }
-}
-```
+  #context fancy-get-language()
 
-#let maybe-style(func-or-styles, inner) = {
-  if type(func-or-styles) == function {
-    let func = func-or-styles
-    style(styles => func(inner(styles)))
-  } else {
-    let styles = func-or-styles
-    inner(styles)
-  }
-}
+  // Ok: the length of the language code should be 2
+  #context fancy-get-language().len()
+  ```
+][
+  ```typst
+  /// Returns the current language as opaque content.
+  ///
+  /// -> content
+  #let fancy-get-language() = context { text.lang }
 
-#block(breakable: false)[
-  ... and its application to the example from before:
+  #context fancy-get-language()
 
-  #example(
-    scope: (maybe-style: maybe-style),
-    ```typ
-    #let get-width(body, func-or-styles) = {
-      maybe-style(func-or-styles, styles => {
-        // the inner function is just our calculation
-        measure(body, styles).width
-      })
-    }
-
-    #let body = [Hello]
-    // we can call `get-width` with a callback ...
-    #get-width(body, width => [
-      The width of "#body" is #width.
-      Twice the width would be #(width * 2).
-    ])
-
-    #style(styles => [
-      // ... or with a styles value
-      #let width = get-width(body, styles)
-      The width of "#body" is #width.
-      Twice the width would be #(width * 2).
-    ])
-    ```
-  )
+  // Doesn't work: type content has no method `len`
+  //   #context fancy-get-language().len()
+  ```
 ]
 
-Especially the latter variant lets us compose multiple functions requiring `style` without requiring tweaks for a specific case.
-The former variant lets us still write code very similar to our initial example, but without having to go through using the `style` function ourselves.
+The first variant of the `fancy-get-language` function allows the caller to do something with the returned language code (which, with this simplistic function is _necessary_ to domething useful); the latter one can only be rendered.
+
+There are of course exceptions to the rule: requiring using `context` is _a bit_ more complicated to call for users, so if there is no benefit (e.g. the function returns complex content where inspecting it doesn't make sense anyway) it may be more useful to just return opaque content so that the user does not need to think about context.
