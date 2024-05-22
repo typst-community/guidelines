@@ -2,15 +2,17 @@
 #import mantys: *
 
 = Trailing Content Arguments
-Prefer trailing content argument calling style only for single content arguments which happen directly in the document.
+Prefer trailing content argument calling style `#func(...)[...]` only for short runs of arguments directly.
+Trailing content arguments are harder to visually separate for complex or large amounts of arguments such as tables with multiple rows and make refactoring more noisy in diffs.
 
 #do-dont[
   ```typ
   #link("https://github.com")[github.com]
+  #custom[a][b]
   ```
 ][
   ```typ
-  // tables are usually more involved, this quickly becomes unweidly and hard to edit
+  // most tables
   #table[a][b][c]
   ```
 ]
