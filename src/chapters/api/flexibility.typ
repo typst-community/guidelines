@@ -51,10 +51,10 @@ This means that returning a context expression limits what can be done with a fu
   /// -> content
   #let fancy-get-language() = context { text.lang }
 
-  #context fancy-get-language()
+  #fancy-get-language()
 
   // Doesn't work: type content has no method `len`
-  //   #context fancy-get-language().len()
+  //   #fancy-get-language().len()
   ```
 ]
 
