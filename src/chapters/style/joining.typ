@@ -15,7 +15,7 @@ Prefer statement joining over manual joining, this keeps code and markup similar
   // this is harder to read and edit
   #let res
   #for x in ("a", "b", "c") {
-    res + [- #x]
+    res += [- #x]
   }
   #res
   ```
