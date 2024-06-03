@@ -7,3 +7,4 @@
 #include "style/sugar.typ"
 #include "style/trailing.typ"
 #include "style/linebreaks.typ"
+#include "style/documentation.typ"
