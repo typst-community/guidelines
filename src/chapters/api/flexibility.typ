@@ -61,3 +61,38 @@ This means that returning a context expression limits what can be done with a fu
 The first variant of the `fancy-get-language` function allows the caller to do something with the returned language code (which, with this simplistic function is _necessary_ to domething useful); the latter one can only be rendered.
 
 There are of course exceptions to the rule: requiring using `context` is _a bit_ more complicated to call for users, so if there is no benefit (e.g. the function returns complex content where inspecting it doesn't make sense anyway) it may be more useful to just return opaque content so that the user does not need to think about context.
+
+== Internal & Public Parameters
+Packages which rely on introspection, especially those relying on global namespaces like the keys of states and counters or the names of labels should ensure that these keys are either unique, or configurable.
+
+An example of this is #mty.package[Hydra], which exposes an anchor element to place in the doc for heading lookup, the anchor is simply a `[#metadata(()) <hydra:anchor>]` which can be placed multiple times.
+To allow users to use this name for their own labels the `hydra` function takes an `anchor` parameter of type label which defaults to `hydra:anchor` to allow configuring this.
+This way a consumer or downstream package is not locked into avoiding this specific label key.
+
+Another example of this would be not exposing internal arguments for sake of efficiency, like a `_validate` argument which is undocumented for the consumer and considered unstable.
+Such an argument could be used to avoid repeated costly argument valdiation when reusing functionality.
+
+```typst
+#let public(arg1, arg2) = {
+  validate(arg1)
+  validate(arg2)
+  also-public-1(arg1, _valdite: false)
+  also-public-2(arg2, _valdite: false)
+}
+
+#let also-public-1(arg, _validate: true) = {
+  if _valdite {
+    validate(arg)
+  }
+  ...
+}
+
+#let also-public-2(arg, _validate: true) = {
+  if _valdite {
+    validate(arg)
+  }
+  ...
+}
+```
+
+The lack of documentation of its use and note of instability in the documentation somewhere ensures that performance is not lost in cases where extra validation may be costly.
