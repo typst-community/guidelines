@@ -6,14 +6,14 @@ Indentation is always 2 spaces per level, tabs can be used to increase accessibi
 For 2 spaces this means that for most syntactic elements, the indentation of nested items or continuations lines up with the start of the first line.
 This keeps nested code narrow, allowing side-by-side editing and preview for most users.
 #do-dont[
-  ```typ
+  ```typst
   // consistent easy to follow indentation
   - top level
     - nested
       continuation
   ```
 ][
-  ```typ
+  ```typst
   // inconsistent and too deep indentation
   - top level
       - nested

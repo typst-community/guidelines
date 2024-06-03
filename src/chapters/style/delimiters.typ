@@ -5,7 +5,7 @@
 Opening delimiters to unfinished statements like `(...)`, `[...]`, etc. are placed on the same line as their preceding element, e.g. for loops, declarations, etc.
 This is actually enforced by the compiler in most cases, as it uses line breaks to terminate most statements.
 #do-dont[
-  ```typ
+  ```typst
   // if it fits on one line avoid linebreaks
   #let var = if { ... }
 
@@ -22,7 +22,7 @@ This is actually enforced by the compiler in most cases, as it uses line breaks 
   }
   ```
 ][
-  ```typ
+  ```typst
   // this doesn't parse
   #let var =
   {

@@ -9,7 +9,7 @@ Good APIs must be flexible enough to allow users to use them in situations a dev
 Starting with Typst 0.11, the #link("https://typst.app/docs/reference/context/")[context] feature allows certain functions to access information about the current location inside the document. The documentation gives the following example:
 
 #example(
-  ```typ
+  ```typst
   #let value = context text.lang
   #value
   --
@@ -22,7 +22,7 @@ Starting with Typst 0.11, the #link("https://typst.app/docs/reference/context/")
 The same `value` is rendered three times, but with different results. This is of course a powerful tool for library authors! However, there is an important restriction that `context` needs to impose to be able to do that: `context` values are opaque content; the above does not result in a string such as `"en"`, it just renders that way:
 
 #example(
-  ```typ
+  ```typst
   #let value = context text.lang
   Rendered: #value
 
