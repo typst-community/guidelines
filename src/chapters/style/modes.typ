@@ -4,7 +4,7 @@
 = Mode Switching
 Prefer staying in the primary mode of your current context, this avoids unnecessarily frequent use of `#` and unintended leading and trailing whitespace in #mode.mark.
 #do-dont[
-  ```typ
+  ```typst
   // we switched into code mode once and stay in it
   #figure(caption: [...],
     stack(dir: ltr,
@@ -14,7 +14,7 @@ Prefer staying in the primary mode of your current context, this avoids unnecess
   )
   ```
 ][
-  ```typ
+  ```typst
   // we switch back and forth, making writing and reading harder
   #figure(caption: [...])[
     #stack(dir: ltr)[

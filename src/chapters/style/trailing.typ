@@ -6,12 +6,12 @@ Prefer trailing content argument calling style `#func(...)[...]` only for short 
 Trailing content arguments are harder to visually separate for complex or large amounts of arguments such as tables with multiple rows and make refactoring more noisy in diffs.
 
 #do-dont[
-  ```typ
+  ```typst
   #link("https://github.com")[github.com]
   #custom[a][b]
   ```
 ][
-  ```typ
+  ```typst
   // most tables
   #table[a][b][c]
   ```

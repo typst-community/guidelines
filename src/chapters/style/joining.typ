@@ -4,14 +4,14 @@
 = Joining
 Prefer statement joining over manual joining, this keeps code and markup similar in structure to the end document.
 #do-dont[
-  ```typ
+  ```typst
   // in a document this clearly communicates intent
   #for x in ("a", "b", "c") [
     - #x
   ]
   ```
 ][
-  ```typ
+  ```typst
   // this is harder to read and edit
   #let res
   #for x in ("a", "b", "c") {
