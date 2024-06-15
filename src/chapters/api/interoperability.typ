@@ -2,12 +2,47 @@
 #import mantys: *
 
 = Interoperability
-Interoperability of packages is an important part of API design.
-The right choice of internal and external functions, states and counters, configurable parameters and hardcoded values are required for a package to be interoperable with others.
+Ensuring interoperability between packages is an important part of API design.
+Lack of interoperability, especially when it leads to bugs or panics will generally cause users to shy away from using your package.
+When designing the API of your package, the following two questions should always be considered for every item of your package's API:
 
-== State & Counter Variables
-If your package heavily relies on state and counter to track user inputs and/or internal values, consider exposing those as unstable values with appropriate documenttion on how these can be used.
-This ensures that a restrictive API exposes an escape hatch to access the inner API without having tomake guarntees about stability.
+- should this item be public or private?
+- should this behavior be configurable or hard coded?
+
+The choice to make an item private or part of a function's behavior hardcoded can negatively impact it's interoperability, but the opposite can lead to bloated and intimidating APIs.
+
+== Visibility
+In order to provide other package authors with the ability to write extensions to your package they must usually be able to access cerain internals of your package.
+Consider exposing internals in some form to allow users and other developers to escape the high level abstractions your API may impose.
+
+An example of exposed internals serving interoperability is the #mty.package[Fletcher] package, which builds on #mty.package[Cetz].
+#mty.package[Fletcher] exposes a simplified API to draw diagrams of all kinds involving arrows.
+In order to allow users to draw anything the package itself my not natively support, #mty.package[Fletcher] allows accessing all resolved coordinates before they are passed #mty.package[Cetz] fro drawing through its `render` parameter.
+
+== Configurability
+The ability of a user to configure how your API behaves is important to ensure your API flexible.
+For example, given a function which queries for and styles elements before a certain label, consider making the label configurable, especially if it is otherwise exposed to the user.
+
+#do-dont[
+  ```typst
+  #let func() = {
+    let selector = internal.func()
+    internal.display(query(selector.before(<x>)))
+  }
+  ```
+][
+  ```typst
+  #let func(label: <x>) = {
+    let selector = internal.func()
+    internal.display(query(selector.before(label)))
+  }
+  ```
+]
+
+An example of such a type of configurability is the #mty.package[Hydra] package.
+Its top level `hydra` function is generally used in page headers, but can be used anywhere on the page if each page contains a `<hydra:anchor>` label before it.
+This label is configurable on the `hydra` function itself through its `anchor` parameter to not unconditionally pollute the global label namespace.
+If another package for whatever reason generated such a label itself, it would be impossible to use #mty.package[Hydra] alongside it.
 
 == Naming of Global Introspection Elements
 For keys of states and counters, use unique identifiers which are unlikely to clash with other packages or project internal identifiers.
