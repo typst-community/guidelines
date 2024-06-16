@@ -9,7 +9,7 @@ An item may be a state variable, a counter, a function, a reusable piece of regu
   For the exact syntax used for documentation comments, refer to @sec:style:docs.
 ]
 
-For functions a public API should always document all public arguments, their usage and purpose as well as constraints on their values.
+For public functions the documentation should always incldue all public parameters, their usage and purpose as well as possible constraints on their values.
 Internal arguments may be ommited, if they are not meant to be exposed to a user, but should still be documented for contributors in the source or a contribution document.
 Depending on the doc aprser in use, named arguments may need their defaults explicitly stated and should have if the doc parser can't parse them automatically.
 If functions require or return contextual values, this should also be communicated clearly.
