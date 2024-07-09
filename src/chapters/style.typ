@@ -1,4 +1,4 @@
-#set heading(offset: 2)
+#set heading(offset: 1)
 #include "style/naming.typ"
 #include "style/indentation.typ"
 #include "style/delimiters.typ"
