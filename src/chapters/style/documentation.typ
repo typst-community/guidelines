@@ -3,38 +3,34 @@
 
 = Documentation <sec:style:docs>
 #wbox[
-  This section documents the syntax of documentation commens, see @sec:api:docs for the contents and purpose of documentation comments.
+  This section documents the syntax of documentation comments, see @sec:api:docs for the contents and purpose of documentation comments.
 ]
 
-Documentation is placed on special comments using three forward slashes `///` and an optional space.
+Documentation is placed on a group of lines comments using three forward slashes `///` and a ascii space (`U+0020`).
 These are called doc comments.
-While the leading space is optional, it is encouraged as it makes the documentaiton easier to read.
-Doc comments may not be interrupted by empty lines, markup, or regular comments.
+Doc comments may not be interrupted by other non-trivial tokens, i.e. a block of documentation must be one continuous sequence of doc line comments without interspersing empty lines, markup, or regular comments.
 
 #do-dont[
   ```typst
-  /// A1
-  /// A2
-  /// A3
-
-  // discuraged, but valid
-  ///B1
-  ///B2
-  ///B3
+  /// A doc comment
+  /// spankning multiple
+  /// consecutive lines
   ```
 ][
   ```typst
-  /// A1
+  ///no leading space
+
+  /// interspersed by
   //
-  /// B1
+  /// a regular comment
 
-  /// A1
+  /// interspersed by
 
-  /// B1
+  /// an empty line
 
-  /// C1
+  /// interspersed by
   Hello World
-  /// D1
+  /// content
 
   /**
    * This is a regular comment, not a doc comment.
@@ -46,8 +42,7 @@ Doc comments may not be interrupted by empty lines, markup, or regular comments.
   ```
 ]
 
-There are two kinds of documentation comments, inner and outer doc comments.
-Outer doc comments are placed right above the declaration they are attached to.
+Doc comments are placed right above the declaration they are attached to except for module doc comments.
 
 #do-dont[
   ```typst
@@ -68,7 +63,9 @@ Outer doc comments are placed right above the declaration they are attached to.
   ```
 ]
 
-Inner doc comments are used to document modules and must not have a declaration, instead they refer to the file they are placed in and may only be declared once and as the first non comment item in a file.
+Module doc comments are used to document modules and must not have a declaration, instead they refer to the file they are placed in and may only be declared once and as the first non-comment item in a file.
+There may be regular comments before doc comments to allow placing internal documentation or license information at the top of the file.
+Inner doc comments are currently not permitted anywhere else.
 
 #do-dont[
   ```typst
@@ -81,7 +78,7 @@ Inner doc comments are used to document modules and must not have a declaration,
   ```
 ][
   ```typst
-  /// Function or valtion doc
+  /// Function or value doc
   #let item = { ... }
 
   /// Stray doc comment, not the module or func doc
@@ -114,7 +111,8 @@ Outer doc comments may be used on `let` bindings only.
 ]
 
 Doc comments contain a description of the documented item itself, as well as an optional semantic trailer.
-The content of descriptions should generally be simple Typst markup and should not contain any scripting, (i.e. no loops, conditionals or function calls, except for `#link("...")[...]`), this allows the documentation to be turned into Markdown or plaintext or LSP to send to editors.
+The content of descriptions should generally be simple Typst markup and should not contain any scripting, (i.e. no loops, conditionals or function calls, except for `#link("...")[...]`).
+This allows the documentation to be turned into markdown or plain text for language servers to send to editors.
 
 == Description
 As mentioned before, the description should be simple, containing mostly markup and no scripting.
@@ -129,9 +127,10 @@ Types in type lists or return type annotations may be separated by `|` to indica
 
 Parameter description and return types (if present) are placed tightly together, property annotations if present are separated using another empty doc comment line.
 
-Parameter documentation is created by writing a term item containing the parameter name, a mandatory type list in parenthesis and optional description.
-If the parameter is an argument sink it's name must also containe the spread operator `..`.
-Each parameter can only be documented once, but doesn't have to, undocumented parameters are considered private.
+Parameter documentation is created by writing a term item containing the parameter name, a type list in parentheses and a description of the parameter.
+If the parameter is an argument sink its name must likewise contain the spread operator `..`.
+Each parameter can only be documented once, but doesn't have to.
+Undocumented parameters are considered private by convention and may only be optional parameters.
 
 #do-dont[
   ```typst
@@ -173,8 +172,9 @@ Each parameter can only be documented once, but doesn't have to, undocumented pa
   ```
 ]
 
-The return type can only be annotated once, on a single line after all parameters if any exist.
-For non function types the return type annotation can be used as a normal type annotation.
+The return type can only be annotated once, on a single line after all parameters, if any exist.
+A variable's documentation can also use the return type annotation syntax to annotate its own type.
+Items which bind a `function.with` expression should be treated as regular function definitions, i.e. their return type is the return type of the function when called, not `function` itself as would be the return value of `function.with`.
 
 #do-dont[
   ```typst
@@ -183,6 +183,11 @@ For non function types the return type annotation can be used as a normal type a
   /// / arg (types): Description for arg
   /// -> types
   #let func(arg) = { ... }
+
+  /// Function doc
+  ///
+  /// -> types
+  #let other = func.with(default)
 
   /// Value doc
   ///
@@ -199,7 +204,8 @@ For non function types the return type annotation can be used as a normal type a
   ```
 ]
 
-Property annotations can be used to document package specific or otherwise important information like deprecation status, visibility or contextuality and may only be used after the return type (if one exists) and an empty doc comment line.
+Property annotations can be used to document package-specific or otherwise important information like deprecation status, visibility or contextuality.
+Such annotations may only be used after the return type (if one exists) and an empty doc comment line.
 
 #do-dont[
   ```typst
