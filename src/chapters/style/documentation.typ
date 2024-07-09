@@ -8,8 +8,8 @@
 
 Documentation is placed on special comments using three forward slashes `///` and an optional space.
 These are called doc comments.
-While the leading space is optional, it is encouraged as it makes the documentaiton easier to read.
-Doc comments may not be interrupted by empty lines, markup, or regular comments.
+While the leading space is optional, it is encouraged, as it makes the documentation easier to read.
+Doc comments may not be interrupted by empty lines, markup, or regular comments, i.e. a blokc of documenation must be one continuous sequence of lines starting with three forward slashes `///`.
 
 #do-dont[
   ```typst
@@ -68,7 +68,9 @@ Outer doc comments are placed right above the declaration they are attached to.
   ```
 ]
 
-Inner doc comments are used to document modules and must not have a declaration, instead they refer to the file they are placed in and may only be declared once and as the first non comment item in a file.
+Inner doc comments are used to document modules and must not have a declaration, instead they refer to the file they are placed in and may only be declared once and as the first non-comment item in a file.
+There may be regular comments before doc comments to allow placing internal documentation or license information at the top of the file.
+Inner doc comments are currently not permitted anywhere else.
 
 #do-dont[
   ```typst
@@ -81,7 +83,7 @@ Inner doc comments are used to document modules and must not have a declaration,
   ```
 ][
   ```typst
-  /// Function or valtion doc
+  /// Function or value doc
   #let item = { ... }
 
   /// Stray doc comment, not the module or func doc
@@ -114,7 +116,7 @@ Outer doc comments may be used on `let` bindings only.
 ]
 
 Doc comments contain a description of the documented item itself, as well as an optional semantic trailer.
-The content of descriptions should generally be simple Typst markup and should not contain any scripting, (i.e. no loops, conditionals or function calls, except for `#link("...")[...]`), this allows the documentation to be turned into Markdown or plaintext or LSP to send to editors.
+The content of descriptions should generally be simple Typst markup and should not contain any scripting, (i.e. no loops, conditionals or function calls, except for `#link("...")[...]`), this allows the documentation to be turned into markdown or plain text for language servers to send to editors.
 
 == Description
 As mentioned before, the description should be simple, containing mostly markup and no scripting.
@@ -129,9 +131,9 @@ Types in type lists or return type annotations may be separated by `|` to indica
 
 Parameter description and return types (if present) are placed tightly together, property annotations if present are separated using another empty doc comment line.
 
-Parameter documentation is created by writing a term item containing the parameter name, a mandatory type list in parenthesis and optional description.
-If the parameter is an argument sink it's name must also containe the spread operator `..`.
-Each parameter can only be documented once, but doesn't have to, undocumented parameters are considered private.
+Parameter documentation is created by writing a term item containing the parameter name, a mandatory type list in parentheses and optional description.
+If the parameter is an argument sink its name must likewise contain the spread operator `..`.
+Each parameter can only be documented once, but doesn't have to, undocumented parameters are considered private by convention and may only optional parameters.
 
 #do-dont[
   ```typst
@@ -173,8 +175,9 @@ Each parameter can only be documented once, but doesn't have to, undocumented pa
   ```
 ]
 
-The return type can only be annotated once, on a single line after all parameters if any exist.
+The return type can only be annotated once, on a single line after all parameters, if any exist.
 For non function types the return type annotation can be used as a normal type annotation.
+Items which bind a `function.with` expression should be treated as regular function definitions, i.e. their return type is the return type of the function when called, not `function` itself as would be the return value of `function.with`.
 
 #do-dont[
   ```typst
@@ -183,6 +186,11 @@ For non function types the return type annotation can be used as a normal type a
   /// / arg (types): Description for arg
   /// -> types
   #let func(arg) = { ... }
+
+  /// Function doc
+  ///
+  /// -> types
+  #let other = func.with(default)
 
   /// Value doc
   ///
@@ -199,7 +207,8 @@ For non function types the return type annotation can be used as a normal type a
   ```
 ]
 
-Property annotations can be used to document package specific or otherwise important information like deprecation status, visibility or contextuality and may only be used after the return type (if one exists) and an empty doc comment line.
+Property annotations can be used to document package specific or otherwise important information like deprecation status, visibility or contextuality.
+Such annotations may only be used after the return type (if one exists) and an empty doc comment line.
 
 #do-dont[
   ```typst
