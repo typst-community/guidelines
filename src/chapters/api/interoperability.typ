@@ -11,7 +11,7 @@ When designing the API of your package, the following two questions should be co
 
 The choice to make an item private or part of a function's behavior hardcoded can negatively impact it's interoperability, but the opposite can lead to bloated and intimidating APIs.
 Depending on the target audience of your package you may chose one over the other.
-Developers may require APIs with more configurabe parameters while end users may just want a simple to use API that doesn't get in their way.
+Developers may require APIs with more configurable parameters while end users may just want a simple to use API that doesn't get in their way.
 
 == Visibility
 In order to provide other package authors with the ability to write extensions to your package they must usually be able to access certain internals of your package.
@@ -21,12 +21,12 @@ Or they can be exposed fully documented and stable but marked as internal or adv
 How and if they are exposed depends on your package's use cases and target audience.
 
 #wbox[
-  At the time of writing this Typst 0.11.1 doesn't support controlling the visiblity of items directly.
+  At the time of writing this Typst 0.11.1 doesn't support controlling the visibility of items directly.
 ]
 
 To mark an item private, consider simply prefixing it with an underscore like `_internal-func`.
-While it is not technically unreachable for a user, it is declared as discuraged to use and generally considered unstable, i.e. not part of the stability guarantees of your API.
-To truly make an item pivate it must be declared in a scope deeper than the top level of a module, such as inside a function or block expression without being returned from such a scope.
+While it is not technically unreachable for a user, it is declared as discouraged to use and generally considered unstable, i.e. not part of the stability guarantees of your API.
+To truly make an item private it must be declared in a scope deeper than the top level of a module, such as inside a function or block expression without being returned from such a scope.
 
 ```typst
 // public and stable
@@ -39,7 +39,7 @@ To truly make an item pivate it must be declared in a scope deeper than the top 
   // unreachable to anyone outside this module
   let truly-internal() = { ... }
 
-  // public and stable by virture of its "re-export"
+  // public and stable by virtue of its "re-export"
   let func() = { ... }
 
   func
@@ -68,11 +68,11 @@ For example, given a function which queries for and styles elements before a cer
   ```
 ]
 
-An example of both exposed internals and configrable behavior allowing interoperability is the #mty.package[Fletcher] package, which builds on #mty.package[Cetz].
+An example of both exposed internals and configurable behavior allowing interoperability is the #mty.package[Fletcher] package, which builds on #mty.package[CeTZ].
 #mty.package[Fletcher] exposes a simplified API to draw diagrams of all kinds involving arrows.
-In order to allow users to draw anything the package itself may not natively support, #mty.package[Fletcher] allows accessing all resolved coordinates and items before they are passed to #mty.package[Cetz] for drawing.
+In order to allow users to draw anything the package itself may not natively support, #mty.package[Fletcher] allows accessing all resolved coordinates and items before they are passed to #mty.package[CeTZ] for drawing.
 
-See @sec:api:flex for more guidelines on flexibilty.
+See @sec:api:flex for more guidelines on flexibility.
 
 ```typst
 #fletcher.diagram(
@@ -100,7 +100,7 @@ A package may decide if it omits this or maintains a representation which is con
 The package unique key is unique within the package and can be freely chosen.
 
 Similarly to the keys of counters and states, labels also share a global namespace, once put into the document.
-Consider a similar approach for these labels, as well as using names invalid for `@ref` syntax, this ensures that LSPs do not pollute label completions with values which are not meant to be refered to by a user.
+Consider a similar approach for these labels, as well as using names invalid for `@ref` syntax, this ensures that LSPs do not pollute label completions with values which are not meant to be referred to by a user.
 An example of this is including whitespace or other non-identifier characters in the key.
 A key like `__ pkg:0.1.0:label:backref-anchor` (notice the space after the double underscores) cannot be used in `@ref` syntax and will therefore not be suggested as a completion.
 

@@ -58,6 +58,6 @@ This means that returning a context expression limits what can be done with a fu
   ```
 ]
 
-The first variant of the `fancy-get-language` function allows the caller to do something with the returned language code (which, with this simplistic function is _necessary_ to domething useful); the latter one can only be rendered.
+The first variant of the `fancy-get-language` function allows the caller to do something with the returned language code (which, with this simplistic function is _necessary_ to do something useful); the latter one can only be rendered.
 
 There are of course exceptions to the rule: requiring using `context` is _a bit_ more complicated to call for users, so if there is no benefit (e.g. the function returns complex content where inspecting it doesn't make sense anyway) it may be more useful to just return opaque content so that the user does not need to think about context.
