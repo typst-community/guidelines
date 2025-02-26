@@ -23,6 +23,6 @@ Typst will maintain the correct linebreaks in both cases.
   ```
 ]
 
-#wbox[
+#warning-alert[
   Semantic Line Breaking cannot be used for chinese markup at the moment.
 ]

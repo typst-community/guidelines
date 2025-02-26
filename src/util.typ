@@ -1,5 +1,5 @@
 // packages
-#import "@preview/mantys:0.1.3"
+#import "@preview/mantys:1.0.1"
 
 // helper functions and variables
 #let do-dont(do, dont) = {
