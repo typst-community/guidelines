@@ -18,7 +18,7 @@ Prefer implicit block expression values over explicit `return`.
   ```
 ]
 
-Prefer assignment of expression block expressions over mutation of existing delcarations.
+Prefer assignment of expression block expressions over mutation of existing declarations.
 #do-dont[
   ```typc
   let x = if var { 0 } else { 1 }
@@ -51,7 +51,7 @@ Prefer implicit block expression values over explicit `return`.
   ```
 ]
 
-Prefer assignment of expression block expressions over mutation of existing delcarations.
+Prefer assignment of expression block expressions over mutation of existing declarations.
 #do-dont[
   ```typc
   let x = if var { 0 } else { 1 }
