@@ -3,7 +3,7 @@
 
 #let doc = toml("/typst.toml").package
 
-#show: mantys.with(
+#show: mantys(
   ..doc,
 
   title: "API & Style Guidelines",

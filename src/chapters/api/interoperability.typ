@@ -20,7 +20,7 @@ They can be exposed as public items which are undocumented or marked as unstable
 Or they can be exposed fully documented and stable but marked as internal or advanced.
 How and if they are exposed depends on your package's use cases and target audience.
 
-#wbox[
+#warning-alert[
   At the time of writing this Typst 0.11.1 doesn't support controlling the visibility of items directly.
 ]
 
@@ -68,9 +68,9 @@ For example, given a function which queries for and styles elements before a cer
   ```
 ]
 
-An example of both exposed internals and configurable behavior allowing interoperability is the #mty.package[Fletcher] package, which builds on #mty.package[CeTZ].
-#mty.package[Fletcher] exposes a simplified API to draw diagrams of all kinds involving arrows.
-In order to allow users to draw anything the package itself may not natively support, #mty.package[Fletcher] allows accessing all resolved coordinates and items before they are passed to #mty.package[CeTZ] for drawing.
+An example of both exposed internals and configurable behavior allowing interoperability is the #package[Fletcher] package, which builds on #package[CeTZ].
+#package[Fletcher] exposes a simplified API to draw diagrams of all kinds involving arrows.
+In order to allow users to draw anything the package itself may not natively support, #package[Fletcher] allows accessing all resolved coordinates and items before they are passed to #package[CeTZ] for drawing.
 
 See @sec:api:flex for more guidelines on flexibility.
 
