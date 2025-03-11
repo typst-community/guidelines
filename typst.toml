@@ -1,10 +1,10 @@
 # this is not a package, but we reuse the schema for simplicity
 [package]
-name = "api-style-guidelines"
+name = "package-api-guidelines"
 version = "0.1.0"
 license = "CC-BY-SA-4.0"
 authors = [
-  "tinger <me@tinger.dev>",
+  "tinger <tinger@tinger.dev>",
 ]
-description = ""
-repository = "https://github.com/typst-community/guidelines"
+description = "A comprehensive guide on designing, maintaining and documenting package APIs."
+repository = "https://github.com/typst-community/package-api-guidelines"

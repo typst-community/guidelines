@@ -4,7 +4,7 @@ src := 'src'
 out := 'out'
 
 src-file := src / 'main.typ'
-out-file := out / 'api-and-style-guidelines.pdf'
+out-file := out / 'package-api-guidelines.pdf'
 
 export TYPST_ROOT := root
 # export TYPST_FONT_PATHS := root / 'assets' / 'fonts'
