@@ -1,4 +1,5 @@
-#import "/src/util.typ": *
+#import "packages.typ": mantys
+#import "util.typ": chapter,
 #import mantys: *
 
 #let doc = toml("/typst.toml").package
