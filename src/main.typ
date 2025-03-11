@@ -6,26 +6,14 @@
 
 #show: mantys(
   ..doc,
-
-  title: "API & Style Guidelines",
+  title: "Package API Guidelines",
   subtitle: "Guidelines for Package & Template Development",
-  date: datetime(year: 2024, month: 05, day: 01),
-
+  date: datetime.today(),
   abstract: [
-    This document contains stylistic guidelines and API best practices and patterns to help package and template developers create simple to use packages with extensible and interoperable APIs.
-    The stylistic guidelines apply to documents in general and make it easier for others to read and contribute to code.
+    This document contains API guidelines, best practices and patterns to help package and template developers create easy-to-use packages with extensible and interoperable APIs.
   ],
-
-  // examples-scope: (),
 )
 
-#set heading(offset: 1)
-
-#chapter[Manifest]
-// TODO
-
-#chapter[Style]
-#include "chapters/style.typ"
-
-#chapter[API]
-#include "chapters/api.typ"
+#include "chapters/flexibility.typ"
+#include "chapters/simplicity.typ"
+#include "chapters/interoperability.typ"
