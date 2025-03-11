@@ -1,3 +1,4 @@
+#import "/src/packages.typ": mantys
 #import "/src/util.typ": *
 #import mantys: *
 
