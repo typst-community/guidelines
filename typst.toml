@@ -2,7 +2,7 @@
 [package]
 name = "api-style-guidelines"
 version = "0.1.0"
-license = "MIT"
+license = "CC-BY-SA-4.0"
 authors = [
   "tinger <me@tinger.dev>",
 ]
