@@ -7,8 +7,8 @@ Ensuring interoperability between packages is an important part of API design.
 Lack of interoperability, especially when it leads to bugs or panics will generally lead users to shy away from using one of the packages which are incompatible.
 When designing the API of your package, the following two questions should be considered for every item of your package's API:
 
-- should this item be public or private?
-- should this behavior be configurable?
+- Should this item be public or private?
+- Should this behavior be configurable?
 
 The choice to make an item private or part of a function's behavior hardcoded can negatively impact it's interoperability, but the opposite can lead to bloated and intimidating APIs.
 Depending on the target audience of your package you may chose one over the other.
@@ -19,7 +19,7 @@ In order to provide other package authors with the ability to write extensions t
 The internals of your package can be exposed in different ways.
 They can be exposed as public items which are undocumented or marked as unstable.
 Or they can be exposed fully documented and stable but marked as internal or advanced.
-How and if they are exposed depends on your package's use cases and target audience.
+How, and if they are exposed depends on your package's use cases and target audience.
 
 #warning-alert[
   At the time of writing this Typst 0.11.1 doesn't support controlling the visibility of items directly.
@@ -27,7 +27,7 @@ How and if they are exposed depends on your package's use cases and target audie
 
 To mark an item private, consider simply prefixing it with an underscore like `_internal-func`.
 While it is not technically unreachable for a user, it is declared as discouraged to use and generally considered unstable, i.e. not part of the stability guarantees of your API.
-To truly make an item private it must be declared in a scope deeper than the top level of a module, such as inside a function or block expression without being returned from such a scope.
+To truly make an item private it must be declared in a scope deeper than the top level scope of a module, such as inside a function or block expression without being returned from such a scope.
 
 ```typst
 // public and stable
