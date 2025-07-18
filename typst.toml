@@ -1,4 +1,5 @@
-# this is not a package, but we reuse the schema for simplicity
+# this is not a package, but we reuse the schema for 3rd party tools
+
 [package]
 name = "package-api-guidelines"
 version = "0.1.0"
