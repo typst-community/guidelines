@@ -3,7 +3,7 @@ This repository contains the source files for a community maintained set of pack
 It is intended for developers across the Typst ecosystem to help them create packages and templates with easy-to-use and consistent APIs.
 The guidelines are not hard rules, nor are they prefect, contributions and discussions to improve them are welcome.
 
-> [!info]
+> [!NOTE]
 > This document is currently a draft, chapters and sections may change or be removed at any point.
 
 ## Contributing
